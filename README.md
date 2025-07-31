@@ -1,46 +1,54 @@
-react-native-funnel-graph
+You are absolutely right to ask, my apologies for the confusion. I provided the structure but did not place your specific URL into the final `README.md` block.
+
+The URL needs to go inside the parentheses of the Markdown image link: ``.
+
+I have now inserted your specific image URL into the correct spot. Also, I have adjusted your GitHub link slightly by adding `?raw=true` to the end. This is a necessary trick to ensure the raw image file is displayed, rather than the GitHub page containing the image.
+
+Here is the complete, corrected `README.md` file. You can copy and paste this entire block.
+
+# react-native-funnel-graph
+
 A flexible, SVG-based funnel chart component for React Native to visualize sequential data and conversion rates.
 
-This component is built with react-native-svg to render crisp, scalable vector graphics for beautiful data visualizations in your mobile apps.
+This component is built with `react-native-svg` to render crisp, scalable vector graphics for beautiful data visualizations in your mobile apps.
 
-Features
-Highly Customizable: Adjust width, height, colors, and funnel shape.
+## Example
 
-SVG-Powered: Renders crisp vector graphics that look great on all screen sizes.
+![Example Funnel Chart](https://github.com/Abhishek-Appstn/react-native-funnel-graph/blob/main/assets/example/image/ders crisp vector graphics that look great on all screen sizes.
+*   **Data-Driven:** Easily render chart segments by passing an array of data.
+*   **Dynamic Labels:** Automatically places and sizes labels within each funnel segment.
+*   **Bottleneck Support:** Accurately visualizes the final "bottleneck" stage of a funnel.
+*   **Contextual Grid:** Includes optional Y-axis labels and gridlines.
 
-Data-Driven: Easily render chart segments by passing an array of data.
+## Installation
 
-Dynamic Labels: Automatically places and sizes labels within each funnel segment.
+1.  **Install the package:**
+    ```bash
+    npm install react-native-funnel-graph
+    ```
+    or
+    ```bash
+    yarn add react-native-funnel-graph
+    ```
 
-Bottleneck Support: Accurately visualizes the final "bottleneck" stage of a funnel.
+2.  **Install peer dependencies:** This package requires `react-native-svg`.
+    ```bash
+    npm install react-native-svg
+    ```
+    or
+    ```bash
+    yarn add react-native-svg
+    ```
+    For iOS, you also need to link the pods:
+    ```bash
+    cd ios && pod install && cd ..
+    ```
 
-Contextual Grid: Includes optional Y-axis labels and gridlines.
+## Usage
 
-Installation
-Install the package:
+Here is a basic example of how to use the `FunnelChart` component.
 
-bash
-npm install react-native-funnel-graph
-or
-
-bash
-yarn add react-native-funnel-graph
-Install peer dependencies: This package requires react-native-svg.
-
-bash
-npm install react-native-svg
-or
-
-bash
-yarn add react-native-svg
-For iOS, you also need to link the pods:
-
-bash
-cd ios && pod install && cd ..
-Usage
-Here is a basic example of how to use the FunnelChart component.
-
-javascript
+```javascript
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import FunnelChart from 'react-native-funnel-graph';
@@ -75,9 +83,9 @@ const App = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <FunnelChart data={funnelData} />
-    </SafeAreaView>
+    
+      
+    
   );
 };
 
@@ -91,28 +99,35 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-Props
-Prop	Type	Default	Description
-data	Array (of objects)	[]	(Required) The dataset for the funnel. See the data object structure below.
-width	number	350	The total width of the SVG container.
-height	number	200	The total height of the SVG container.
-yAxisLabels	Array (of strings)	['100%', '75%', '50%', '25%', '0%']	Labels to display along the Y-axis gridlines.
-maxFunnelWidthRatio	number	0.85	A value between 0 and 1 representing the width of the funnel's top relative to the chart area.
-minFunnelWidthRatio	number	0.2	A value between 0 and 1 representing the width of the funnel's narrowest point relative to the chart area.
-style	object	undefined	Custom styles to apply to the root View container.
-Data Object Structure
-Each object in the data array can have the following properties:
+```
 
-Key	Type	Required	Description
-value	number	Yes	The numerical value for this segment. Must be in descending order.
-label	string	Yes	The text label to display inside the segment.
-colors	object	No	An object with side and top color strings (e.g., { side: '#CCC', top: '#AAA' }).
-textColor	string	No	The color for the segment's label text. Defaults to black.
-Contributing
+## Props
+
+| Prop                  | Type                 | Default                                      | Description                                                                                                    |
+| --------------------- | -------------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| **`data`**            | `Array` (of objects) | `[]`                                         | **(Required)** The dataset for the funnel. See the data object structure below.                                |
+| `width`               | `number`             | `350`                                        | The total width of the SVG container.                                                                          |
+| `height`              | `number`             | `200`                                        | The total height of the SVG container.                                                                         |
+| `yAxisLabels`         | `Array` (of strings) | `['100%', '75%', '50%', '25%', '0%']`         | Labels to display along the Y-axis gridlines.                                                                  |
+| `maxFunnelWidthRatio` | `number`             | `0.85`                                       | A value between 0 and 1 representing the width of the funnel's top relative to the chart area.               |
+| `minFunnelWidthRatio` | `number`             | `0.2`                                        | A value between 0 and 1 representing the width of the funnel's narrowest point relative to the chart area. |
+| `style`               | `object`             | `undefined`                                  | Custom styles to apply to the root `View` container.                                                           |
+
+### Data Object Structure
+
+Each object in the `data` array can have the following properties:
+
+| Key         | Type     | Required | Description                                                                   |
+| ----------- | -------- | -------- | ----------------------------------------------------------------------------- |
+| `value`     | `number` | Yes      | The numerical value for this segment. Must be in descending order.            |
+| `label`     | `string` | Yes      | The text label to display inside the segment.                                 |
+| `colors`    | `object` | No       | An object with `side` and `top` color strings (e.g., `{ side: '#CCC', top: '#AAA' }`). |
+| `textColor` | `string` | No       | The color for the segment's label text. Defaults to black.                    |
+
+## Contributing
+
 Contributions are welcome! Please feel free to submit a pull request or open an issue if you find a bug or have a feature request.
 
-License
-This project is licensed under the ISC License.
+## License
 
-Screenshot-2025-07-31-a...jpg
-32.1 KB
+This project is licensed under the ISC License.
