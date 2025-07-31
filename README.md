@@ -6,7 +6,10 @@ This component is built with `react-native-svg` to render crisp, scalable vector
 
 ## Example
 
-![Funnel Chart Example](./assets/example/image/exampleimage.png) crisp vector graphics that look great on all screen sizes.
+![Funnel Chart Example](./assets/example/image/exampleimage.png)
+
+![Funnel Chart Example](https://github.com/Abhishek-Appstn/react-native-funnel-graph/blob/main/assets/example/image/exampleimage.png?raw=true)
+crisp vector graphics that look great on all screen sizes.
 *   **Data-Driven:** Easily render chart segments by passing an array of data.
 *   **Dynamic Labels:** Automatically places and sizes labels within each funnel segment.
 *   **Bottleneck Support:** Accurately visualizes the final "bottleneck" stage of a funnel.
