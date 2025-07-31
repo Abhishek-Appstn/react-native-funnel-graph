@@ -1,11 +1,3 @@
-You are absolutely right to ask, my apologies for the confusion. I provided the structure but did not place your specific URL into the final `README.md` block.
-
-The URL needs to go inside the parentheses of the Markdown image link: ``.
-
-I have now inserted your specific image URL into the correct spot. Also, I have adjusted your GitHub link slightly by adding `?raw=true` to the end. This is a necessary trick to ensure the raw image file is displayed, rather than the GitHub page containing the image.
-
-Here is the complete, corrected `README.md` file. You can copy and paste this entire block.
-
 # react-native-funnel-graph
 
 A flexible, SVG-based funnel chart component for React Native to visualize sequential data and conversion rates.
@@ -14,7 +6,7 @@ This component is built with `react-native-svg` to render crisp, scalable vector
 
 ## Example
 
-![Example Funnel Chart](https://github.com/Abhishek-Appstn/react-native-funnel-graph/blob/main/assets/example/image/ders crisp vector graphics that look great on all screen sizes.
+![Funnel Chart Example](./assets/example/image/exampleimage.png) crisp vector graphics that look great on all screen sizes.
 *   **Data-Driven:** Easily render chart segments by passing an array of data.
 *   **Dynamic Labels:** Automatically places and sizes labels within each funnel segment.
 *   **Bottleneck Support:** Accurately visualizes the final "bottleneck" stage of a funnel.
