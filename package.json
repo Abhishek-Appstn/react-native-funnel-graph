@@ -1,0 +1,34 @@
+{
+  "name": "react-native-funnel-graph",
+  "version": "1.0.0",
+  "description": "A flexible, SVG-based funnel chart component for React Native to visualize sequential data and conversion rates.",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "babel src --out-dir lib --copy-files",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react-native",
+    "chart",
+    "funnel-chart",
+    "funnel-graph",
+    "svg",
+    "data-visualization"
+  ],
+  "author": "abhishek ml",
+  "license": "ISC",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-svg": ">=12.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.0",
+    "@babel/core": "^7.17.0",
+    "@babel/preset-env": "^7.17.0",
+    "@babel/preset-react": "^7.16.0"
+  }
+}
