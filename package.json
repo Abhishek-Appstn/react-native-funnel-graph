@@ -20,10 +20,12 @@
   ],
   "author": "abhishek ml",
   "license": "ISC",
+  "dependencies": {
+    "react-native-svg": "^13.4.0"
+  },
   "peerDependencies": {
-    "react": "*",
-    "react-native": "*",
-    "react-native-svg": ">=12.0.0"
+    "react": ">=16.8.0",
+    "react-native": ">=0.59.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.0",

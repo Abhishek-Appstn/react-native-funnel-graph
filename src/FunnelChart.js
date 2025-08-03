@@ -2,14 +2,105 @@ import React from 'react';
 import { View } from 'react-native';
 import Svg, { Path, G, Line, Text as SvgText, Ellipse } from 'react-native-svg';
 
-const ConeStack = ({ yOffset, color = {}, topWidth, bottomWidth, height, centerX, bottleneckHeight = 0 }) => {
+interface ColorSet {
+    /** Color for the side of the funnel segment */
+    side?: string;
+    /** Color for the top ellipse of the funnel segment */
+    top?: string;
+}
+
+interface FunnelDataItem {
+    /** 
+     * Numeric value that determines the height of this segment 
+     * @example 100 // For a full height segment
+     */
+    value: number;
+    /** 
+     * Text label to display inside the segment 
+     * @example 'Visits' // Label for the segment
+     */
+    label: string;
+    /** 
+     * Color customization for this segment 
+     * @example { side: '#4e73df', top: '#2e59d9' } // Blue color scheme
+     */
+    colors?: ColorSet;
+    /** 
+     * Color for the text label inside this segment 
+     * @example '#FFFFFF' // White text
+     */
+    textColor?: string;
+}
+
+interface ConeStackProps {
+    yOffset: number;
+    color?: ColorSet;
+    topWidth: number;
+    bottomWidth: number;
+    height: number;
+    centerX: number;
+    bottleneckHeight?: number;
+}
+
+interface FunnelChartProps {
+    /** 
+     * Total width of the chart container 
+     * @default 350
+     * @example 400 // For a wider chart
+     */
+    width?: number;
+    /** 
+     * Total height of the chart container 
+     * @default 200
+     * @example 300 // For a taller chart
+     */
+    height?: number;
+    /** 
+     * Data for the funnel segments 
+     * @example
+     * [
+     *   { value: 100, label: 'Visits', colors: { side: '#4e73df', top: '#2e59d9' } },
+     *   { value: 80, label: 'Signups', colors: { side: '#1cc88a', top: '#17a673' } }
+     * ]
+     */
+    data?: FunnelDataItem[];
+    /** 
+     * Interval for Y-axis labels (in percentage points)
+     * @default 25
+     * @example 20 // Will show 0%, 20%, 40%, 60%, 80%, 100%
+     */
+    yAxisInterval?: number;
+    /** 
+     * Maximum width of the funnel (as ratio of available width) 
+     * @default 0.85
+     * @example 0.9 // For a wider funnel top
+     */
+    maxFunnelWidthRatio?: number;
+    /** 
+     * Minimum width of the funnel (as ratio of available width) 
+     * @default 0.2
+     * @example 0.1 // For a narrower funnel bottom
+     */
+    minFunnelWidthRatio?: number;
+}
+
+const ConeStack: React.FC<ConeStackProps> = ({
+    yOffset,
+    color = {},
+    topWidth,
+    bottomWidth,
+    height,
+    centerX,
+    bottleneckHeight = 0,
+}) => {
     const ellipseHeight = 22.7;
     const ellipseBaseRx = 177.073 / 2;
     const ellipseScaleX = topWidth > 0 ? topWidth / (ellipseBaseRx * 2) : 0;
     const sideStartY = ellipseHeight / 2;
 
-    const sideColor = color.side || '#CCCCCC';
-    const topColor = color.top || '#AAAAAA';
+    // Blue color scheme with darker shade for ellipse
+    const sideColor = color.side || '#9ED68A';
+    const topColor = color.top || '#C5E1A5';
 
     const sidePath = bottleneckHeight > 0
         ? `M ${-topWidth / 2},${sideStartY}
@@ -41,14 +132,49 @@ const ConeStack = ({ yOffset, color = {}, topWidth, bottomWidth, height, centerX
     );
 };
 
-const FunnelChart = ({
+/**
+ * A customizable funnel chart component for React Native with blue color scheme
+ * 
+ * @example
+ * // Basic usage with default blue colors
+ * <FunnelChart data={[
+ *   { value: 100, label: 'Visits' },
+ *   { value: 80, label: 'Signups' }
+ * ]} />
+ * 
+ * @example
+ * // Custom styled funnel with different intervals
+ * <FunnelChart 
+ *   width={400}
+ *   height={300}
+ *   data={[
+ *     { value: 100, label: 'Impressions' },
+ *     { value: 75, label: 'Clicks' }
+ *   ]}
+ *   yAxisInterval={20}
+ * />
+ */
+const FunnelChart: React.FC<FunnelChartProps> = ({
     width = 350,
     height = 200,
     data = [],
-    yAxisLabels = ['100%', '75%', '50%', '25%', '0%'],
+    yAxisInterval = 25,
     maxFunnelWidthRatio = 0.85,
     minFunnelWidthRatio = 0.2,
 }) => {
+    // Calculate labels based on interval
+    const yAxisLabels = React.useMemo(() => {
+        const interval = yAxisInterval;
+        const labels = [];
+        for (let i = 100; i >= 0; i -= interval) {
+            labels.push(`${i}%`);
+        }
+        if (100 % interval !== 0 && !labels.includes('0%')) {
+            labels.push('0%');
+        }
+        return labels.sort((a, b) => parseInt(b) - parseInt(a));
+    }, [yAxisInterval]);
+
     // Chart layout constants
     const yAxisAreaWidth = 50;
     const paddingTop = 10;
@@ -58,10 +184,9 @@ const FunnelChart = ({
     const funnelCenterX = chartWidth / 2;
     const ellipseHeight = 22.7;
 
-    // Funnel dimension constants
-    const bottleneckStartValue = 20;
-    const maxFunnelWidth = chartWidth * maxFunnelWidthRatio;
-    const minFunnelWidth = chartWidth * minFunnelWidthRatio;
+    // Calculate the max value from data or use 100 as default
+    const maxValue = data[0]?.value || 100;
+    const heightPerValue = availableChartHeight / maxValue;
 
     const hasData = data && data.length > 0;
 
@@ -69,8 +194,7 @@ const FunnelChart = ({
     const segments = React.useMemo(() => {
         if (!hasData) return [];
 
-        const maxValue = data[0]?.value || 100;
-        const heightPerValue = availableChartHeight / maxValue;
+        const bottleneckStartValue = 20;
         const totalTaperedHeight = Math.max(0, (maxValue - bottleneckStartValue) * heightPerValue);
 
         let currentY = paddingTop - (ellipseHeight / 2);
@@ -87,8 +211,8 @@ const FunnelChart = ({
             const coneHeight = (itemValue - nextValue) * heightPerValue;
             const bottomProgress = totalTaperedHeight > 0 ? (cumulativeHeight + coneHeight) / totalTaperedHeight : 0;
 
-            const topWidth = maxFunnelWidth - topProgress * (maxFunnelWidth - minFunnelWidth);
-            const bottomWidth = maxFunnelWidth - bottomProgress * (maxFunnelWidth - minFunnelWidth);
+            const topWidth = chartWidth * maxFunnelWidthRatio - topProgress * (chartWidth * maxFunnelWidthRatio - chartWidth * minFunnelWidthRatio);
+            const bottomWidth = chartWidth * maxFunnelWidthRatio - bottomProgress * (chartWidth * maxFunnelWidthRatio - chartWidth * minFunnelWidthRatio);
 
             const yOffset = currentY;
             currentY += coneHeight;
@@ -100,10 +224,10 @@ const FunnelChart = ({
 
             return { ...item, topWidth, bottomWidth, coneHeight, yOffset, fontSize, label: itemLabel };
         }).filter(Boolean);
-    }, [data, hasData, availableChartHeight, maxFunnelWidth, minFunnelWidth, paddingTop]);
+    }, [data, hasData, maxValue, heightPerValue, chartWidth, maxFunnelWidthRatio, minFunnelWidthRatio, paddingTop]);
 
     const bottleneckHeight = hasData
-        ? bottleneckStartValue * (availableChartHeight / (data[0]?.value || 100))
+        ? 20 * heightPerValue
         : 0;
 
     return (
@@ -112,11 +236,14 @@ const FunnelChart = ({
                 {hasData && (
                     <G>
                         {yAxisLabels?.map((label, index) => {
-                            const yPos = index * (availableChartHeight / (yAxisLabels.length - 1)) + paddingTop;
+                            const percentage = parseInt(label);
+                            const yPos = paddingTop + (availableChartHeight * (1 - percentage / 100));
                             return (
                                 <G key={`y-axis-${index}`}>
                                     <Line x1={0} y1={yPos} x2={width} y2={yPos} stroke="#EAEAEA" strokeDasharray="4,4" />
-                                    <SvgText x={yAxisAreaWidth - 10} y={yPos} dy="4" fill="#888" fontSize={12} textAnchor="end" alignmentBaseline="hanging">{label}</SvgText>
+                                    <SvgText x={yAxisAreaWidth - 10} y={yPos} dy="4" fill="#888" fontSize={12} textAnchor="end" alignmentBaseline="hanging">
+                                        {label}
+                                    </SvgText>
                                 </G>
                             );
                         })}
@@ -131,11 +258,11 @@ const FunnelChart = ({
                                 return (
                                     <ConeStack
                                         key={`cone-${index}`}
-                                        yOffset={segment?.yOffset}
-                                        color={segment?.colors}
-                                        topWidth={segment?.topWidth}
-                                        bottomWidth={segment?.bottomWidth}
-                                        height={segment?.coneHeight}
+                                        yOffset={segment.yOffset}
+                                        color={segment.colors}
+                                        topWidth={segment.topWidth}
+                                        bottomWidth={segment.bottomWidth}
+                                        height={segment.coneHeight}
                                         centerX={funnelCenterX}
                                         bottleneckHeight={isLastSegment ? bottleneckHeight : 0}
                                     />
@@ -150,7 +277,7 @@ const FunnelChart = ({
                                         x={funnelCenterX}
                                         y={labelY}
                                         fill={segment.textColor || '#000'}
-                                        fontSize={segment?.fontSize}
+                                        fontSize={segment.fontSize}
                                         fontWeight="500"
                                         textAnchor="middle"
                                         alignmentBaseline="middle"
