@@ -10,14 +10,52 @@
     "build": "babel src --out-dir lib --copy-files",
     "prepublishOnly": "npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abhishek-Appstn/react-native-funnel-graph.git"
+  },
   "keywords": [
     "react-native",
+    "react-native-chart",
+    "react-native-charts",
+    "react-native-graph",
+    "react-native-graphs",
+    "react-native-svg",
+    "react-native-svg-charts",
     "chart",
+    "charts",
+    "graph",
+    "graphs",
+    "funnel",
     "funnel-chart",
     "funnel-graph",
+    "funnel-plot",
+    "funnel-visualization",
+    "3d-funnel",
+    "3d-chart",
     "svg",
-    "data-visualization"
+    "svg-charts",
+    "data-visualization",
+    "data-viz",
+    "visualization",
+    "analytics",
+    "dashboard",
+    "business",
+    "conversion",
+    "conversion-rate",
+    "pipeline",
+    "sales-funnel",
+    "marketing-funnel",
+    "user-flow",
+    "mobile-chart",
+    "mobile-graphs",
+    "interactive-charts",
+    "react-charts"
   ],
+  "bugs": {
+    "url": "https://github.com/Abhishek-Appstn/react-native-funnel-graph/issues"
+  },
+  "homepage": "https://github.com/Abhishek-Appstn/react-native-funnel-graph#readme",
   "author": "abhishek ml",
   "license": "ISC",
   "dependencies": {

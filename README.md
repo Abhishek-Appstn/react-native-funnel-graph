@@ -1,55 +1,46 @@
-# react-native-funnel-graph
+```markdown
+# react-native-funnel-graph 📊
 
-A flexible, SVG-based funnel chart component for React Native to visualize sequential data and conversion rates.
+[![npm version](https://img.shields.io/npm/v/react-native-funnel-graph.svg?style=flat)](https://www.npmjs.com/package/react-native-funnel-graph)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 
-This component is built with `react-native-svg` to render crisp, scalable vector graphics for beautiful data visualizations in your mobile apps.
+A high-performance SVG funnel chart component for React Native with beautiful gradients and automatic percentage labels.
 
-## Example
+![Funnel Examples](https://raw.githubusercontent.com/Abhishek-Appstn/react-native-funnel-graph/main/assets/example/image/exampleimage.png)
+![iOS Example](https://raw.githubusercontent.com/Abhishek-Appstn/react-native-funnel-graph/main/assets/example/image/ExampleIos.png)
+![Example 2](https://raw.githubusercontent.com/Abhishek-Appstn/react-native-funnel-graph/main/assets/example/image/Graph%202.png)
+![Example 3](https://raw.githubusercontent.com/Abhishek-Appstn/react-native-funnel-graph/main/assets/example/image/Graph3.png)
 
-![Funnel Chart Example](./assets/example/image/exampleimage.png)
+## Features ✨
 
-![Funnel Chart Example](https://github.com/Abhishek-Appstn/react-native-funnel-graph/blob/main/assets/example/image/exampleimage.png?raw=true)
-crisp vector graphics that look great on all screen sizes.
-*   **Data-Driven:** Easily render chart segments by passing an array of data.
-*   **Dynamic Labels:** Automatically places and sizes labels within each funnel segment.
-*   **Bottleneck Support:** Accurately visualizes the final "bottleneck" stage of a funnel.
-*   **Contextual Grid:** Includes optional Y-axis labels and gridlines.
+- 🎨 Beautiful blue gradient default theme
+- 📏 Automatic Y-axis percentage labels
+- 🔍 Perfectly responsive at any size
+- ✏️ Fully customizable colors and styles
+- 🚀 Optimized for smooth performance
+- 📱 Works on both iOS and Android
 
-## Installation
+## Installation 💻
 
-1.  **Install the package:**
-    ```bash
-    npm install react-native-funnel-graph
-    ```
-    or
-    ```bash
-    yarn add react-native-funnel-graph
-    ```
+```bash
+npm install react-native-funnel-graph
+# or
+yarn add react-native-funnel-graph
+```
 
-2.  **Install peer dependencies:** This package requires `react-native-svg`.
-    ```bash
-    npm install react-native-svg
-    ```
-    or
-    ```bash
-    yarn add react-native-svg
-    ```
-    For iOS, you also need to link the pods:
-    ```bash
-    cd ios && pod install && cd ..
-    ```
+For iOS:
+```bash
+cd ios && pod install && cd ..
+```
 
-## Usage
+## Basic Usage 🚀
 
-Here is a basic example of how to use the `FunnelChart` component.
-
-```javascript
+```jsx
 import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import FunnelChart from 'react-native-funnel-graph';
 
 const App = () => {
-  // Define the data for the funnel chart
   const funnelData = [
     {
       value: 100,
@@ -58,71 +49,107 @@ const App = () => {
       textColor: '#A05822',
     },
     {
-      value: 80,
+      value: 50,
       label: 'Clicks',
       colors: { side: '#FF8A65', top: '#FFAB91' },
       textColor: '#B71C1C',
-    },
-    {
-      value: 55,
-      label: 'Sign Ups',
-      colors: { side: '#9ED68A', top: '#C5E1A5' },
-      textColor: '#33691E',
-    },
-    {
-      value: 40,
-      label: 'Purchases',
-      colors: { side: '#81D4FA', top: '#B3E5FC' },
-      textColor: '#01579B',
-    },
+    }
   ];
 
   return (
-    
-      
-    
+    <View style={{ flex: 1, padding: 20 }}>
+      <FunnelChart 
+        data={funnelData}
+        yAxisInterval={20} // Shows 0%, 20%, 40%, 60%, 80%, 100%
+        width={350}
+        height={400}
+      />
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-export default App;
 ```
 
-## Props
+## Props 🔧
 
-| Prop                  | Type                 | Default                                      | Description                                                                                                    |
-| --------------------- | -------------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| **`data`**            | `Array` (of objects) | `[]`                                         | **(Required)** The dataset for the funnel. See the data object structure below.                                |
-| `width`               | `number`             | `350`                                        | The total width of the SVG container.                                                                          |
-| `height`              | `number`             | `200`                                        | The total height of the SVG container.                                                                         |
-| `yAxisLabels`         | `Array` (of strings) | `['100%', '75%', '50%', '25%', '0%']`         | Labels to display along the Y-axis gridlines.                                                                  |
-| `maxFunnelWidthRatio` | `number`             | `0.85`                                       | A value between 0 and 1 representing the width of the funnel's top relative to the chart area.               |
-| `minFunnelWidthRatio` | `number`             | `0.2`                                        | A value between 0 and 1 representing the width of the funnel's narrowest point relative to the chart area. |
-| `style`               | `object`             | `undefined`                                  | Custom styles to apply to the root `View` container.                                                           |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| **data** | Array | Required | Funnel segments data |
+| width | number | 350 | Chart width (px) |
+| height | number | 200 | Chart height (px) |
+| yAxisInterval | number | 25 | Y-axis label interval |
+| maxFunnelWidthRatio | number | 0.85 | Top width ratio |
+| minFunnelWidthRatio | number | 0.2 | Bottom width ratio |
 
-### Data Object Structure
+### Data Format
 
-Each object in the `data` array can have the following properties:
+```javascript
+{
+  value: number,       // Required
+  label: string,       // Required
+  colors?: {           // Optional
+    side?: string,     // Default: '#9ED68A'
+    top?: string       // Default: '#C5E1A5'
+  },
+  textColor?: string   // Default: '#FFFFFF'
+}
+```
 
-| Key         | Type     | Required | Description                                                                   |
-| ----------- | -------- | -------- | ----------------------------------------------------------------------------- |
-| `value`     | `number` | Yes      | The numerical value for this segment. Must be in descending order.            |
-| `label`     | `string` | Yes      | The text label to display inside the segment.                                 |
-| `colors`    | `object` | No       | An object with `side` and `top` color strings (e.g., `{ side: '#CCC', top: '#AAA' }`). |
-| `textColor` | `string` | No       | The color for the segment's label text. Defaults to black.                    |
+## Examples 🎨
+
+### Custom Colors
+```jsx
+<FunnelChart
+  data={[
+    {
+      value: 100,
+      label: 'Visitors',
+      colors: { side: '#FF7043', top: '#FF8A65' }
+    }
+  ]}
+/>
+```
+
+### Different Interval
+```jsx
+<FunnelChart
+  yAxisInterval={20}  // Shows 0%, 20%, 40%, etc.
+  data={data}
+/>
+```
+
+## Troubleshooting 🔍
+
+**Chart not showing?**
+- Run `pod install` for iOS
+- Check Metro server is running
+- Verify valid data structure
+
+**Text cut off?**
+- Increase chart width
+- Shorten labels
+- Adjust minFunnelWidthRatio
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue if you find a bug or have a feature request.
+Contributions are welcome! Please feel free to submit a pull request or open an issue at the [GitHub repository](https://github.com/Abhishek-Appstn/react-native-funnel-graph) if you find a bug or have a feature request.
 
-## License
+## License 📄
 
-This project is licensed under the ISC License.
+ISC License © Abhishek ML
+```
+
+This version includes:
+
+1. All visual examples from your repository
+2. Simplified installation instructions
+3. Complete props documentation
+4. Ready-to-use code examples
+5. Troubleshooting guide
+6. Professional formatting
+7. License information
+
+The file is optimized for:
+- GitHub rendering
+- npmjs.com display
+- Mobile readability
+- Easy copying/pasting
