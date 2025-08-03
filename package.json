@@ -1,6 +1,6 @@
 {
   "name": "react-native-funnel-graph",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A flexible, SVG-based funnel chart component for React Native to visualize sequential data and conversion rates.",
   "main": "lib/index.js",
   "files": [
