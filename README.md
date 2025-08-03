@@ -1,10 +1,12 @@
-```markdown
+
 # react-native-funnel-graph 📊
 
 [![npm version](https://img.shields.io/npm/v/react-native-funnel-graph.svg?style=flat)](https://www.npmjs.com/package/react-native-funnel-graph)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 
 A high-performance SVG funnel chart component for React Native with beautiful gradients and automatic percentage labels.
+
+## Example
 
 ![Funnel Examples](https://raw.githubusercontent.com/Abhishek-Appstn/react-native-funnel-graph/main/assets/example/image/exampleimage.png)
 ![iOS Example](https://raw.githubusercontent.com/Abhishek-Appstn/react-native-funnel-graph/main/assets/example/image/ExampleIos.png)
@@ -13,25 +15,29 @@ A high-performance SVG funnel chart component for React Native with beautiful gr
 
 ## Features ✨
 
-- 🎨 Beautiful blue gradient default theme
-- 📏 Automatic Y-axis percentage labels
-- 🔍 Perfectly responsive at any size
-- ✏️ Fully customizable colors and styles
-- 🚀 Optimized for smooth performance
-- 📱 Works on both iOS and Android
+*   **Beautiful Defaults:** Comes with a sleek, blue gradient theme out of the box.
+*   **Automatic Labels:** Automatically generates and places Y-axis percentage labels for clarity.
+*   **Fully Responsive:** Scales perfectly to look crisp and clear on any screen size.
+*   **Customizable:** Easily customize colors and styles to match your app's theme.
+*   **Optimized Performance:** Built for smooth rendering and a native feel.
+*   **Cross-Platform:** Works on both iOS and Android.
 
 ## Installation 💻
 
-```bash
-npm install react-native-funnel-graph
-# or
-yarn add react-native-funnel-graph
-```
+1.  **Install the package:**
+    ```
+    npm install react-native-funnel-graph
+    ```
+    or
+    ```
+    yarn add react-native-funnel-graph
+    ```
 
-For iOS:
-```bash
-cd ios && pod install && cd ..
-```
+2.  **For iOS, link the pods:**
+    ```
+    cd ios && pod install && cd ..
+    ```
+
 
 ## Basic Usage 🚀
 
@@ -71,28 +77,25 @@ const App = () => {
 
 ## Props 🔧
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| **data** | Array | Required | Funnel segments data |
-| width | number | 350 | Chart width (px) |
-| height | number | 200 | Chart height (px) |
-| yAxisInterval | number | 25 | Y-axis label interval |
-| maxFunnelWidthRatio | number | 0.85 | Top width ratio |
-| minFunnelWidthRatio | number | 0.2 | Bottom width ratio |
+| Prop                  | Type    | Default | Description                                                                                                |
+| --------------------- | ------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+| **`data`**            | `Array` | `[]`    | **(Required)** The dataset for the funnel. See the data object structure below.                            |
+| `width`               | `number`| `350`   | The total width of the SVG container in pixels.                                                            |
+| `height`              | `number`| `200`   | The total height of the SVG container in pixels.                                                           |
+| `yAxisInterval`       | `number`| `25`    | The interval for Y-axis percentage labels.                                                                 |
+| `maxFunnelWidthRatio` | `number`| `0.85`  | A value from 0 to 1 representing the width of the funnel's top relative to the chart area.                 |
+| `minFunnelWidthRatio` | `number`| `0.2`   | A value from 0 to 1 representing the width of the funnel's narrowest point relative to the chart area.     |
 
-### Data Format
+### Data Object Structure
 
-```javascript
-{
-  value: number,       // Required
-  label: string,       // Required
-  colors?: {           // Optional
-    side?: string,     // Default: '#9ED68A'
-    top?: string       // Default: '#C5E1A5'
-  },
-  textColor?: string   // Default: '#FFFFFF'
-}
-```
+Each object in the `data` array can have the following properties:
+
+| Key         | Type     | Required | Description                                                                    |
+| ----------- | -------- | -------- | ------------------------------------------------------------------------------ |
+| `value`     | `number` | Yes      | The numerical value for this segment. Must be in descending order.             |
+| `label`     | `string` | Yes      | The text label to display inside the segment.                                  |
+| `colors`    | `object` | No       | An object with `side` and `top` color strings. Defaults to a green theme.      |
+| `textColor` | `string` | No       | The color for the segment's label text. Defaults to `#FFFFFF`.                 |
 
 ## Examples 🎨
 
@@ -120,14 +123,14 @@ const App = () => {
 ## Troubleshooting 🔍
 
 **Chart not showing?**
-- Run `pod install` for iOS
-- Check Metro server is running
-- Verify valid data structure
+- Run `pod install` for iOS.
+- Ensure the Metro server is running without errors.
+- Verify that your `data` array follows the correct structure.
 
-**Text cut off?**
-- Increase chart width
-- Shorten labels
-- Adjust minFunnelWidthRatio
+**Text is cut off?**
+- Increase the `width` of the chart.
+- Use shorter `label` text.
+- Adjust the `minFunnelWidthRatio` to give text more space.
 
 ## Contributing
 
@@ -135,21 +138,10 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 
 ## License 📄
 
-ISC License © Abhishek ML
-```
+This project is licensed under the ISC License.
 
-This version includes:
+[1] https://img.shields.io/npm/v/react-native-funnel-graph.svg?style=flat
 
-1. All visual examples from your repository
-2. Simplified installation instructions
-3. Complete props documentation
-4. Ready-to-use code examples
-5. Troubleshooting guide
-6. Professional formatting
-7. License information
+[2] https://www.npmjs.com/package/react-native-funnel-graph
 
-The file is optimized for:
-- GitHub rendering
-- npmjs.com display
-- Mobile readability
-- Easy copying/pasting
+[3] https://img.shields.io/badge/License-ISC-blue.svg
